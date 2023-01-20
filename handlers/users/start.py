@@ -1,4 +1,4 @@
-from aiogram import Router, F
+from aiogram import Router
 from aiogram.filters import CommandStart
 from aiogram.types import Message
 from sqlalchemy.exc import IntegrityError
@@ -18,18 +18,19 @@ async def command_start(message: Message):
     except IntegrityError:
         pass
     question = await Question.all(limit=1)
-    await message.answer(
-        text=question[0].question,
-        reply_markup=await questions_panel_ikb(question_id=question[0].id)
-    )
+    if question:
+        await message.answer(
+            text=question[0].question,
+            reply_markup=await questions_panel_ikb(question_id=question[0].id)
+        )
 
 
-@start_router.message(F.text == 'HELLO!')
-async def hello_message(message: Message):
-    await message.delete()
-    await message.answer(
-        text='GOODBYE!'
-    )
+# @start_router.message(F.text == 'HELLO!')
+# async def hello_message(message: Message):
+#     await message.delete()
+#     await message.answer(
+#         text='GOODBYE!'
+#     )
 
 
 @start_router.message()

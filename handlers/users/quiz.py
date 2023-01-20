@@ -16,7 +16,7 @@ async def get_answer(callback: CallbackQuery, callback_data: QuestionCallbackDat
             text=question.question,
             reply_markup=await questions_panel_ikb(question_id=question.id)
         )
-    else:
+    elif answer.product_id:
         product = await Product.get(pk=answer.product_id)
         await callback.message.edit_text(
             text=product.name,
@@ -30,4 +30,8 @@ async def get_answer(callback: CallbackQuery, callback_data: QuestionCallbackDat
                     ]
                 ]
             ) if product.url else None
+        )
+    else:
+        await callback.message.edit_text(
+            text='DONE'
         )
