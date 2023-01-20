@@ -1,10 +1,10 @@
-from .models import Base, Question, QuestionAnswer, User, Product
+from .models import Base, Product, Question, QuestionAnswer, User
 
 
 __all__ = [
     'Base',
+    'Product',
     'Question',
     'QuestionAnswer',
     'User',
-    'Product'
 ]
