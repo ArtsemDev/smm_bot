@@ -6,7 +6,7 @@ from sqlalchemy.orm import DeclarativeBase
 class Base(DeclarativeBase):
     id = Column(INT, primary_key=True, autoincrement=True)
 
-    engine = create_async_engine("sqlite+aiosqlite:///smm.sqlite3")
+    engine = create_async_engine("postgresql+asyncpg://smm:password@0.0.0.0:5432/smm")
     _Session = async_sessionmaker(bind=engine)
 
     @staticmethod

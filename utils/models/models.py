@@ -17,8 +17,18 @@ class Question(Base):
     media_id = Column(VARCHAR(512), nullable=True)
 
 
+class Product(Base):
+    __tablename__ = 'products'
+
+    name = Column(VARCHAR(64), nullable=False)
+    url = Column(VARCHAR(512), nullable=True)
+    media_id = Column(VARCHAR(512), nullable=True)
+
+
 class QuestionAnswer(Base):
     __tablename__ = 'question_answers'
 
     answer = Column(VARCHAR(64), nullable=False)
     question_id = Column(INT, ForeignKey('questions.id', ondelete='CASCADE'), nullable=False)
+    next_question_id = Column(INT, ForeignKey('questions.id', ondelete='CASCADE'), nullable=True)
+    product_id = Column(INT, ForeignKey('products.id', ondelete='NO ACTION'), nullable=True)

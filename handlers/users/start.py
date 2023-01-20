@@ -3,8 +3,8 @@ from aiogram.filters import CommandStart
 from aiogram.types import Message
 from sqlalchemy.exc import IntegrityError
 
-from utils.models import User
 from keyboards.inline import questions_panel_ikb
+from utils.models import User, Question
 
 start_router = Router(name='start')
 
@@ -16,12 +16,11 @@ async def command_start(message: Message):
     try:
         await user.save()
     except IntegrityError:
-        text = f'Давно не виделись! {message.from_user.full_name}'
-    else:
-        text = f'Привет, новый друг {message.from_user.full_name}'
+        pass
+    question = await Question.all(limit=1)
     await message.answer(
-        text=text,
-        reply_markup=await questions_panel_ikb(question_id=1)
+        text=question[0].question,
+        reply_markup=await questions_panel_ikb(question_id=question[0].id)
     )
 
 
