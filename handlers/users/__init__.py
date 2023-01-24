@@ -2,8 +2,10 @@ from aiogram import Router
 
 from .start import start_router
 from .quiz import quiz_router
+from .exchange import exchange_router
 
 user_router = Router(name='users')
+user_router.include_router(exchange_router)
 user_router.include_router(start_router)
 user_router.include_router(quiz_router)
 
